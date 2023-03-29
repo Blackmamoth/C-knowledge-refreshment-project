@@ -2,6 +2,7 @@
 
 void addStudent();
 void searchStudent();
+void deleteStudent();
 
 int main()
 {
@@ -23,7 +24,7 @@ int main()
             puts("Option 3 to be implemented");
             break;
         case 4:
-            puts("Option 4 to be implemented");
+            deleteStudent();
             break;
         case 5:
             puts("BYE!!!");
@@ -61,4 +62,14 @@ void searchStudent()
     fgets(rollNo, 5, stdin);
     rollNo[strcspn(rollNo, "\n")] = '\0';
     searchStudentInfo(rollNo);
+}
+
+void deleteStudent()
+{
+    char rollNo[5];
+    getchar();
+    printf("Enter student's roll no: ");
+    fgets(rollNo, 5, stdin);
+    rollNo[strcspn(rollNo, "\n")] = '\0';
+    deleteStudentInfo(rollNo);
 }
