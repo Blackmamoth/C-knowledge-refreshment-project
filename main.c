@@ -2,7 +2,7 @@
 
 void addStudent();
 void searchStudent();
-void deleteStudent();
+void modifyStudent(Mode mode);
 
 int main()
 {
@@ -21,10 +21,10 @@ int main()
             searchStudent();
             break;
         case 3:
-            puts("Option 3 to be implemented");
+            modifyStudent(UPDATE_MODE);
             break;
         case 4:
-            deleteStudent();
+            modifyStudent(DELETE_MODE);
             break;
         case 5:
             puts("BYE!!!");
@@ -64,12 +64,22 @@ void searchStudent()
     searchStudentInfo(rollNo);
 }
 
-void deleteStudent()
+void modifyStudent(Mode mode)
 {
     char rollNo[5];
     getchar();
     printf("Enter student's roll no: ");
     fgets(rollNo, 5, stdin);
     rollNo[strcspn(rollNo, "\n")] = '\0';
-    deleteStudentInfo(rollNo);
+    switch (mode)
+    {
+    case UPDATE_MODE:
+        modifyStudentInfo(rollNo, UPDATE_MODE, updateStudentInfo);
+        break;
+    case DELETE_MODE:
+        modifyStudentInfo(rollNo, DELETE_MODE, NULL);
+        break;
+    default:
+        fprintf(stderr, "Invalid mode selected");
+    }
 }

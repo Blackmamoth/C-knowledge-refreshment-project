@@ -35,7 +35,7 @@ void addStudentInfo(Student student)
     FILE *file;
     if ((file = fopen(FILE_NAME, "a")) != NULL)
     {
-        fprintf(file, "%s , %hu , %hu , %.1f\n", student.name, student.age, student.rollNo, student.GPA);
+        fprintf(file, "%s ,%hu ,%hu ,%.1f\n", student.name, student.age, student.rollNo, student.GPA);
         fclose(file);
         printf("\n\n***********\n");
         printf("Student info added successfully!\n");
@@ -73,7 +73,43 @@ void searchStudentInfo(char rollNo[])
         fprintf(stderr, "An Error occured while writing to file %s.\n", FILE_NAME);
 }
 
-void deleteStudentInfo(char rollNo[])
+void updateStudentInfo(Student *student)
+{
+    printf("%s , %hu , %hu , %.1f\n", student->name, student->age, student->rollNo, student->GPA);
+    char name[MAX_NAME_LENGTH];
+    unsigned short age, rollNo;
+    double GPA;
+    puts("Enter new details for the student.");
+    printf("Enter name (press Enter to skip): ");
+    fgets(name, MAX_NAME_LENGTH, stdin);
+    if (strlen(name) > 1 && !isspace(name[0]))
+    {
+        name[strcspn(name, "\n")] = '\0';
+        strcpy(student->name, name);
+    }
+    getchar();
+    printf("Enter age (enter 0 to skip): ");
+    scanf("%hu", &age);
+    if (age > 0)
+    {
+        student->age = age;
+    }
+    printf("Enter roll no. (enter 0 to skip): ");
+    scanf("%hu", &rollNo);
+    if (rollNo > 0)
+    {
+        student->rollNo = rollNo;
+    }
+    printf("Enter GPA (enter 0 to skip): ");
+    scanf("%lf", &GPA);
+    if (GPA > 0.0)
+    {
+        student->GPA = GPA;
+    }
+    printf("%s , %hu , %hu , %.1f\n", student->name, student->age, student->rollNo, student->GPA);
+}
+
+void modifyStudentInfo(char rollNo[], Mode mode, void (*modify)(Student *))
 {
     FILE *file;
     FILE *tempFile;
@@ -94,6 +130,19 @@ void deleteStudentInfo(char rollNo[])
 
                 if (strstr(line, rollNo))
                 {
+                    Student student;
+                    switch (mode)
+                    {
+                    case UPDATE_MODE:
+                        sscanf(line, "%[^,] ,%hu ,%hu ,%lf", student.name, &student.age, &student.rollNo, &student.GPA);
+                        modify(&student);
+                        fprintf(tempFile, "%s ,%hu ,%hu ,%.1f\n", student.name, student.age, student.rollNo, student.GPA);
+                        break;
+                    case DELETE_MODE:
+                        break;
+                    default:
+                        break;
+                    }
                     found = 1;
                 }
                 else
@@ -107,7 +156,9 @@ void deleteStudentInfo(char rollNo[])
                 else if (rename(TEMP_FILE_NAME, FILE_NAME) != 0)
                     fprintf(stderr, "An error occured while renaming file %s.\n", FILE_NAME);
                 else
-                    printf("Student info deleted successfully!!!");
+                {
+                    printf("Student info modified successfully!!!\n");
+                }
             else
             {
                 remove(TEMP_FILE_NAME);
