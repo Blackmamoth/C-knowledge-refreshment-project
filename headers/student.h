@@ -11,4 +11,10 @@ typedef struct
     double GPA;
 } Student;
 
+typedef enum
+{
+    UPDATE_MODE,
+    DELETE_MODE
+} Mode;
+
 #endif

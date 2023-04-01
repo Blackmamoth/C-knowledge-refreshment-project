@@ -10,12 +10,6 @@
 #define FILE_HEADING "NAME, AGE, ROLL NO, GPA"
 #define MAX_LINE_LENGTH 1024
 
-typedef enum
-{
-  UPDATE_MODE,
-  DELETE_MODE
-} Mode;
-
 void assignFileHeading();
 
 short checkFileExists();
