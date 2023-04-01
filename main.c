@@ -42,14 +42,14 @@ void addStudent()
 {
     Student student;
     getchar();
-    printf("Enter student's name: ");
+    printf("Enter name: ");
     fgets(student.name, 100, stdin);
     student.name[strcspn(student.name, "\n")] = '\0';
-    printf("Enter student's age: ");
+    printf("Enter age: ");
     scanf("%hu", &student.age);
-    printf("Enter student's roll no: ");
+    printf("Enter roll no: ");
     scanf("%hu", &student.rollNo);
-    printf("Enter student's GPA: ");
+    printf("Enter GPA: ");
     scanf("%lf", &student.GPA);
     addStudentInfo(student);
 }
@@ -58,7 +58,7 @@ void searchStudent()
 {
     char rollNo[5];
     getchar();
-    printf("Enter student's roll no: ");
+    printf("Enter roll no: ");
     fgets(rollNo, 5, stdin);
     rollNo[strcspn(rollNo, "\n")] = '\0';
     searchStudentInfo(rollNo);
@@ -68,7 +68,7 @@ void modifyStudent(Mode mode)
 {
     char rollNo[5];
     getchar();
-    printf("Enter student's roll no: ");
+    printf("Enter roll no: ");
     fgets(rollNo, 5, stdin);
     rollNo[strcspn(rollNo, "\n")] = '\0';
     switch (mode)
@@ -80,6 +80,6 @@ void modifyStudent(Mode mode)
         modifyStudentInfo(rollNo, DELETE_MODE, NULL);
         break;
     default:
-        fprintf(stderr, "Invalid mode selected");
+        fprintf(stderr, "Error: Invalid mode selected");
     }
 }

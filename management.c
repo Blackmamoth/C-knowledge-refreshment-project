@@ -1,4 +1,5 @@
 #include "headers/management.h"
+#include "headers/student.h"
 
 void assignFileHeading()
 {
@@ -10,7 +11,7 @@ void assignFileHeading()
     }
     else
     {
-        printf("An error occured while writing to file %s.\n", FILE_NAME);
+        printf("An error occurred while writing to file %s.\n", FILE_NAME);
     }
 }
 
@@ -38,12 +39,12 @@ void addStudentInfo(Student student)
         fprintf(file, "%s ,%hu ,%hu ,%.1f\n", student.name, student.age, student.rollNo, student.GPA);
         fclose(file);
         printf("\n\n***********\n");
-        printf("Student info added successfully!\n");
+        printf("Student info added successfully !");
         printf("\n***********\n");
     }
     else
     {
-        fprintf(stderr, "An Error occured while writing to file %s.\n", FILE_NAME);
+        fprintf(stderr, "An error occurred while writing to file %s.\n", FILE_NAME);
     }
 }
 
@@ -64,13 +65,13 @@ void searchStudentInfo(char rollNo[])
             if (strstr(line, rollNo))
             {
                 printf("\n\n***********\n");
-                printf("%s\n", line);
+                printf("%s", line);
                 printf("\n***********\n");
             }
         }
     }
     else
-        fprintf(stderr, "An Error occured while writing to file %s.\n", FILE_NAME);
+        fprintf(stderr, "An error occurred while writing to file %s.\n", FILE_NAME);
 }
 
 void updateStudentInfo(Student *student)
@@ -152,9 +153,9 @@ void modifyStudentInfo(char rollNo[], Mode mode, void (*modify)(Student *))
             fclose(tempFile);
             if (found)
                 if (remove(FILE_NAME) != 0)
-                    fprintf(stderr, "An error occured while deleting file %s.\n", FILE_NAME);
+                    fprintf(stderr, "An error occurred while deleting file %s.\n", FILE_NAME);
                 else if (rename(TEMP_FILE_NAME, FILE_NAME) != 0)
-                    fprintf(stderr, "An error occured while renaming file %s.\n", FILE_NAME);
+                    fprintf(stderr, "An error occurred while renaming file %s.\n", FILE_NAME);
                 else
                 {
                     printf("Student info modified successfully!!!\n");
@@ -166,18 +167,18 @@ void modifyStudentInfo(char rollNo[], Mode mode, void (*modify)(Student *))
             }
         }
         else
-            fprintf(stderr, "An Error occured while creating temporary file.\n");
+            fprintf(stderr, "An Error occurred while creating temporary file.\n");
     }
     else
-        fprintf(stderr, "An Error occured while writing to file %s.\n", FILE_NAME);
+        fprintf(stderr, "An error occurred while writing to file %s.\n", FILE_NAME);
 }
 
 void displayOptions()
 {
-    puts("1. Add student info");
-    puts("2. Search student");
-    puts("3. Update student info");
-    puts("4. Delete student info");
+    puts("1. Add student information");
+    puts("2. Search for a student");
+    puts("3. Update student information");
+    puts("4. Delete student information");
     puts("5. EXIT");
     puts("\n");
 }
